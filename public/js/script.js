@@ -73,6 +73,7 @@ function send(_data, obj ={_url: '/action', _processData: false, _contentType: f
     contentType: obj._contentType,
     success: function(data) {
       console.log("success");
+      console.log(data);
       $("#output").attr("src", data);
     },
     error: function(data) {

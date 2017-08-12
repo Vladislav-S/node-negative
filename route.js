@@ -15,9 +15,11 @@ function match(req, res){
     var currentImg = _webPath + _imgName;
     count++;
     if (err) return res.status(500).send(err);
-    convertImage(_path + _imgName);
-    res.status(200);
-    res.send(currentImg);
+    convertImage(_path + _imgName, function(){
+      res.status(200);
+      res.send(currentImg);
+    });
+
   });
 }
 
@@ -29,10 +31,12 @@ function matchURL(req, res){
   //TODO: check url before getting img
 
   download(_url, imgName, function(){console.log("done");
-    convertImage(imgName);
-    res.status(200);
-    //res.sendFile(imgName, {root: __dirname});
-    res.send(_webPath+_imgName);
+    convertImage(imgName, function(){
+      res.status(200);
+      //res.sendFile(imgName, {root: __dirname});
+      res.send(_webPath+_imgName);
+    });
+
   });
   //
 }
@@ -45,11 +49,12 @@ function download(uri, filename, callback){
   });
 };
 
-function convertImage(path){
+function convertImage(path, onload = function(err, img){;}){
   Jimp.read(path, function(err, img){
     if(err) throw err;
-    img.mirror(true, false);
-    img.write(path);
+    img.invert(function(err, img){
+      img.write(path, onload);
+    });
   });
 }
 
