@@ -1,1 +1,3 @@
 add mime type check
+add image property checking
+add image corresponding checking
