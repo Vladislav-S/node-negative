@@ -1,0 +1,8 @@
+/node_modules/*
+/public/uploaded/*
+/public/fonts/*
+/public/css/*
+/public/js/*
+!script.js
+
+package-lock.json
