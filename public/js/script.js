@@ -42,8 +42,11 @@ $(document).ready(function (){
     if($('#urlArea').val() === "") {
       $("#fileArea").prop('disabled', false);
       $("#fileAreaBtn").removeClass('disabled');
-  }
-
+      setUrlFile("#preview");
+    }
+    else{
+      setUrlFile("#preview", $('#urlArea').val());
+    }
   });
 
   $('#fileArea').click(function(){
@@ -51,7 +54,7 @@ $(document).ready(function (){
   }).change(function(){
     if($('#fileArea').val() === ""){
       $('#urlArea').prop('disabled', false);
-      removeUrlFile('#preview');
+      setUrlFile('#preview');
     }
     else{
       readUrlFile(this);
@@ -69,7 +72,8 @@ function send(_data, obj ={_url: '/action', _processData: false, _contentType: f
     processData: obj._processData,
     contentType: obj._contentType,
     success: function(data) {
-      console.log(data);
+      console.log("success");
+      $("#output").attr("src", data);
     },
     error: function(data) {
       console.log(data);
@@ -87,10 +91,9 @@ function readUrlFile(input){
   }
 }
 
-function removeUrlFile(id){
-  $(id).attr('src', '');
+function setUrlFile(id, url=''){
+  $(id).attr('src', url);
 }
-
 
 //
 //urlArea
